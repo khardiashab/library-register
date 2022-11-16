@@ -1,3 +1,5 @@
+const env = require("dotenv")
+env.config()
 const express = require("express")
 const app = express()
 const expressLayout = require('express-ejs-layouts')
@@ -25,13 +27,13 @@ app.use(express.urlencoded({extended : true}))
 
 
 // connect with database
-mongoose.connect(keys.moongodb.mongodbURI)
+mongoose.connect(process.env.MONGODBURI)
   .then( ()=> console.log("You succfully connected with mongodb...."))
   .catch(err => console.log("This error from mongodb connection: ", err))
 
 
 app.use(session({
-  secret : keys.session.secret,
+  secret : process.env.SESSION_SECRET,
   resave : false,
   saveUninitialized :false,
   cookie : {
