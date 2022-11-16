@@ -11,7 +11,7 @@ const session = require("express-session")
 const User =require("./model/user-schema")
 
 // require from our creating function
-const keys = require("../config/key")
+// const keys = require("../config/key")
 const passport = require("passport")
 require("../config/passport-config")(passport)
 

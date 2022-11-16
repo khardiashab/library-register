@@ -1,5 +1,5 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy
-const keys = require("./key")
+// const keys = require("./key")
 const User = require("../src/model/user-schema")
 
 module.exports = (passport) => {
