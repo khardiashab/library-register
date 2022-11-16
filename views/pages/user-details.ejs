@@ -1,0 +1,34 @@
+<%- include("../partials/navbar") %>
+<div class="details-form">
+  <div class="tittle-container text-center fs-4 fw-bold">Hi <em><%= typeof user.name !== "undefined" ? user.name :"Awesome"  %></em>
+  </div>
+  <div class="tittle-container text-center fs-4 fw-bold">Welcome To  <em>LibraryRegister</em>
+  </div>
+
+  <form action="/user/details-form" method="post">
+    <p>Fill your details...</p> 
+
+    <input type="text" name="name" class="form-control my-2" min="10" max="60"
+      value= '<%= typeof user.name !== "undefined" ? user.name :"Enter Your Name"  %>'
+       required>
+
+    <label for="library" class="mb-0 mt-2 d-block">Choose your WorkPlace</label>
+    <select name="library" class="custom-select my-2 mr-sm-2 d-block" id="library" required>
+   <option disabled>Choose your Library</option>
+   <option default value="Shaurya Library" >Shaurya Library</option>
+   <option value="others" disabled>Others</option>
+    </select>
+
+    <div class="input_field radio_option my-2">
+   <input type="radio" name="gender" id="rd1" value="Male" required>
+   <label for="rd1">Male</label>
+   <input type="radio" name="gender" value ="Female" id="rd2" required>
+   <label for="rd2" >Female</label>
+   </div>
+
+   <input type="number" name="age" class="form-control my-2" min="10" max="60" placeholder="Age" required>
+   <input type="submit" class="form-control my-5 px-auto btn btn-warning" value="SUBMIT">
+  </form>
+</div>
+
+ <%- include("../partials/footer") %> 

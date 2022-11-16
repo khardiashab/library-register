@@ -1,0 +1,247 @@
+html{
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
+
+*{
+  /* margin: 0; */
+  padding: 0;
+  /* font-size: large; */
+}
+body{
+  /* width: 100%; */
+  min-height: 100vh ;
+  padding-bottom: 10rem;
+  position:relative;
+  background-color: #f0f1f3;
+}
+/* .body{
+  min-height: 100vh ;
+  padding-bottom: 5rem;
+  position:relative;
+  background-color: #f0f1f3;
+} */
+em{
+  color:crimson;
+}
+
+/* home page styling  */
+.home-page.center{
+  /* border:2px solid black; */
+  margin-top: 3rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home-page .logo-img{
+  max-width: 400px;
+}
+.home-page .btn{
+  font-weight: 600;
+  font-size: larger;
+  padding: 0;
+  padding-right: 1rem;
+  transition: scale 500ms;
+}
+.home-page .btn:active  {
+  scale: .95;
+}
+.home-page .btn> img{
+  height: 100%;
+  background-color: #ffff;
+  border:1px solid white;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: 1rem;
+}
+.home-page .img-fluid, .user-page figure>img{
+  border-radius: 50%;
+}
+
+/* ! navbar styling */
+.navigation-bar{
+  background-color: #044377cc;
+  color: azure;
+  margin-bottom: 2rem;
+}
+
+.navigation-bar, footer{
+  background-color: #044377cc;
+  padding: 0rem 0;
+  color: azure;
+ } 
+ .navigation-bar .navbar-brand {
+  font-weight: 500;
+  color: azure;
+  /* font-size: 2rem; */
+ }
+ .navigation-bar .container-fluid{
+  justify-content: space-between;
+ }
+ 
+ */
+ .navigation-bar li a{
+  font-weight: 500;
+  color: azure;
+ }
+ 
+ /* ! list ejs styling  */
+ .main{
+  width:100%;
+  padding: 0;
+  margin: 50px 0px;
+  /* border: 2px solid black; */
+ }
+ .heading{
+  padding:5px 20px;
+  background-color: rgba(96, 16, 226, 0.705);
+  margin: 2rem 0;
+  border-radius: 5px;
+ }
+ 
+ .center{
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   text-align: center;
+   /* align-items: center; */
+ }
+ .date{
+  color: white;
+ }
+ 
+ .list-form{
+  padding: 0px;
+  width: 100%;
+  bottom: 10px;
+ }
+ .list{
+  list-style: none;
+ }
+ .d-none{
+  /* display: none; */
+  opacity: 0;
+ }
+ .list li{
+  text-align: start;
+   font-size: small;
+  width: 108%;
+  position: relative;
+  right: 35px;
+  margin: 2px;
+  padding: 10px 20px;
+  background-color: rgba(252, 216, 164, 0.753);
+  /* color: rgb(87, 52, 52); */
+ }
+ input[type=checkbox]:checked ~.text-line {
+  color:rgba(5, 168, 100, 0.781);
+  text-decoration: line-through;
+ }
+
+ .trash{
+   font-size: 1.5rem;
+   color: #c01d07;
+   /* width: 3rem; */
+   position: absolute;
+   right: 3%;
+   bottom: 10%;
+   cursor: pointer;
+   border: none;
+   background-color: transparent;
+ }
+ .add-new{
+  height: 100%;
+  width: 15%;
+  padding: .5rem 1rem;
+  color: white;
+  background-color: rgba(96, 16, 226, 0.705);
+  border: none;
+  display: inline;
+ }
+ .add-new:hover{
+  cursor: pointer;
+ }
+ 
+ .list .last-li{
+   padding: 0;
+ }
+
+ 
+ .add-input{
+  padding: 5px 2rem;
+  height: 3rem;
+  width: 80%;
+  margin: 0;
+  border: none;
+  position: relative;
+ }
+
+ .add-input:focus{
+   outline: grey;
+   background-color: rgba(221, 145, 231, 0.753);
+ 
+ }
+ #hidden-radio{
+  display: none;
+  opacity: 0;
+ }
+ 
+ #deleteCan{
+  display: none;
+ }
+
+ .delete-modal{
+  background-color: rgba(255, 187, 0, 0.7);
+
+ }
+ 
+ /* ! footer styling  */
+ footer{
+  text-align: center;
+  position: absolute;
+  height: 3rem;
+  left: 25%;
+  right: 25%;
+  bottom: 0;
+ }
+ @media screen and (max-width : 500px) {
+    footer{
+      left: 0;
+      right: 0;
+    }
+ }
+
+ /* !  register ejs styling  */
+.history{
+  width: 100%;
+  padding: .5rem 2rem;
+}
+
+.how-div{
+  font-size: small;
+  color: white;
+  padding: 0;
+  margin: 0;
+  /* padding: 1rem 2rem */
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  text-align: center;
+  /* margin: 0.5rem .1rem; */
+  background-color: rgba(47, 47, 116, .6);
+  background-color: rgba(78, 209, 78, 0.815);
+}
+.full-history .how-div{
+  background-color: rgb(233, 67, 67);
+  color: #ffff;
+}
+.accordion-body{
+  padding: 1rem 0!important;
+}
+.daily-btn{
+  font-size: 10px;
+}

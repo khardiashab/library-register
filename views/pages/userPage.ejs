@@ -1,0 +1,16 @@
+
+<%- include("../partials/navbar") %> 
+<div class="user-page">
+ <div class="user text-center mt-4">
+  <span class="d-block">Hey !<figure class="d-block text-center">
+   <img src="<%= user.profile.pictureUrl %> " alt="ajay">
+  </figure> <em><%= user.profile.name %> </em> </span>
+ </div>
+ <div class="quote"> <q class="blockquote d-block p-1">You are responsible for your life. God gives you conditions but you take decision on these conditions</q></div>
+
+ <div class="main-button d-flex flex-column">
+  <a class="btn btn-secondary my-2 py-2 fs-3 fw-bold text-white" href="/user/attendence" type="button">Attendence</a>
+  <a class="btn btn-secondary my-2 py-2 fs-3 fw-bold text-white" type="button" href="/user/todo-list">To-do List</a>
+ </div>
+</div>
+<%- include("../partials/footer") %> 

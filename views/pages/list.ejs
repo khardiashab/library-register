@@ -1,0 +1,86 @@
+<%- include("../partials/navbar") -%>
+
+<div class="main center m-0 p-0">
+  <h1 class="heading date">
+    <%= date %>
+  </h1>
+  <h1 class="text-capitalize">
+  Today
+  </h1>
+
+  <!-- ! We also add this with another method -->
+  <div class="list-form">
+    <ul class="list">
+      <% for(item of taskList.tasks){ %>
+        <li>
+          <!-- ! This form for completing task in any list -->
+          <form action="/user/list/check" method="post" class="d-inline">
+             <!-- input for item id -->
+             <input 
+             type="hidden" 
+             name="itemId" 
+             value="<%= item._id %>">
+             <!-- input for list id -->
+             <input type="hidden" name="listId" value="<%= taskList._id %>">
+            <input class="check-box" type="checkbox" data-task-completed="<%= item.done %>" onclick="" onchange="this.form.submit()" name="checkbox"
+              value="<%= item._id %>">
+            <span class="text-line text-capitalize">
+              <%= item.name %>
+            </span>
+          </form>
+
+          <!-- ! this form for deleting item from the list -->
+          <form action="/user/list/delete" method="post" class="delete-form d-inline">
+            <!-- input for item id -->
+            <input 
+            type="hidden" 
+            name="itemId" 
+            value="<%= item._id %>">
+            <!-- input for list id -->
+            <input type="hidden" name="listId" value="<%= taskList._id %>">
+            <!-- submit button  -->
+            <div class="trash"
+            style="display:<%= item.done === true?'none': 'block'%>"
+            data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            >
+            <i class="fa-solid fa-trash-can"></i></div>
+
+            <!-- ! modal for prior notification to delete the content -->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content delete-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Delete Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="lead">Do you want to delete task.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </form>
+        </li>
+        <% } %>
+          <li class="last-li">
+            <!-- ! this from for adding new item. -->
+            <form action="/user/list/newItem" method="post" class="form">
+
+              <input class="add-input" placeholder="New Item" type="text" name="newItem" autocomplete="off"
+                required>
+              <input type="hidden" name="listId" value="<%= taskList._id %>">
+              <button type="submit" class="add-new"><i class="fa-solid fa-plus"></i></button>
+          </li>
+          </form>
+    </ul>
+  </div>
+</div>
+<!-- ! Let me add template here as a footer -->
+
+<%- include("../partials/footer") -%>

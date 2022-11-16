@@ -1,0 +1,73 @@
+<%- include("../partials/navbar") %>
+
+  <div class="tittle-container text-center fs-2 fw-bold">
+    Hey 😎 <i
+      class="fa-sharp fa-solid fa-line-height"></i><br> <em>Ajay Khardia</em>
+  </div>
+
+  <form action="/user/attendence" method="post" class="my-3 text-center">
+    <input type="hidden">
+    <input type="hidden">
+    <input type="submit" class="form-control btn btn-info btn-lg text-white fw-bold py-2" value="Present">
+  </form>
+
+  <div class="history-accordion">
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            Last 15 days history
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="last-history">
+              <div class="row row-cols-6 m-0 p-0">
+                <% for(let i=0; i<15; i++) {%>
+                  <div class="col p-0 my-1">
+                    <form action="/user/daily-list" method="post">
+                      <input type="hidden">
+                      <div class="daily-btn btn btn-outline-secondary">Wed, 16</div>
+                    </form>
+                  </div>
+                  <% } %>
+                  <div class="col p-0 my-1">
+                    <form action="/user/daily-list" method="post">
+                      <input type="hidden">
+                      <div class="daily-btn btn btn-outline-warning">Wed, 16</div>
+                    </form>
+                  </div>
+                  <div class="col p-0 my-1">
+                    <form action="/user/daily-list" method="post">
+                      <input type="hidden">
+                      <div class="daily-btn btn btn-outline-warning">Wed, 16</div>
+                    </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Monthly history
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="last-history">
+              <p class="lead pl-3">You don't have history to show.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <%- include("../partials/footer") %>
