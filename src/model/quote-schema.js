@@ -9,8 +9,8 @@ const QuoteSchema = Schema({
 })
 
 const Quote = mongoose.model("Quote", QuoteSchema)
-new Quote({
-  quote : "Believe in Yourself, You can do anything. In this thing that you are doing, you are the best."
-}).save()
+// new Quote({
+//   quote : "Believe in Yourself, You can do anything. In this thing that you are doing, you are the best."
+// }).save()
 
 module.exports = Quote

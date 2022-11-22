@@ -1,4 +1,4 @@
-const env = require("dotenv")
+// const env = require("dotenv")
 env.config()
 const express = require("express")
 const app = express()
@@ -79,13 +79,13 @@ let ensurauthentication = (req, res, next) =>{
   }
 }
 // set router 
-// app.use("/", require("../routes/home"))
-// app.use("/user", ensurauthentication, require("../routes/user"))
 // ! daily list creat middlware
 const dcMiddleware = require("../helper/dailylistCreaterMiddleware")
-// ! localhost middleware for the website
-const localhost = require("../helper/directMiddleware")
-app.use("/user", localhost, dcMiddleware,ensurauthentication, require("../routes/user"))
+app.use("/", require("../routes/home"))
+app.use("/user", ensurauthentication, dcMiddleware,  require("../routes/user"))
+// // ! localhost middleware for the website
+// // const localhost = require("../helper/directMiddleware")
+// app.use("/user", localhost, dcMiddleware,ensurauthentication, require("../routes/user"))
 
 // ! random data 
 // const randomData = require("../helper/randomDataCreater")
