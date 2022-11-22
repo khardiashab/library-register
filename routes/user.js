@@ -79,7 +79,7 @@ router.post("/attendence/coords", async(req,res) =>{
   let longitude = Number(req.body.longitude).toFixed(3)
   console.log(latitude, req.user.library.longitude)
   console.log(longitude, req.user.library.longitude )
-  if(latitude == req.user.library.longitude && longitude == req.user.library.longitude ) {
+  if(latitude === req.user.library.longitude && longitude === req.user.library.longitude ) {
 
     let date = new Date();
     date = dateChanger(date)
