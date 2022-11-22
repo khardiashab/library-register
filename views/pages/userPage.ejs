@@ -6,11 +6,11 @@
    <img src="<%= user.profile.pictureUrl %> " alt="ajay">
   </figure> <em><%= user.profile.name %> </em> </span>
  </div>
- <div class="quote"> <q class="blockquote d-block p-1">You are responsible for your life. God gives you conditions but you take decision on these conditions</q></div>
+ <div class="quote px-2 my-5"> <q class="blockquote d-block p-1"><%= quote %> </q></div>
 
- <div class="main-button d-flex flex-column">
-  <a class="btn btn-secondary my-2 py-2 fs-3 fw-bold text-white" href="/user/attendence" type="button">Attendence</a>
-  <a class="btn btn-secondary my-2 py-2 fs-3 fw-bold text-white" type="button" href="/user/todo-list">To-do List</a>
+ <div class="main-button d-flex text-center justify-content-center">
+  <a class="btn btn-primary btn-dark btn-lg m-2 py-2 fs-3 fw-bold" href="/user/attendence" type="button">Attendence</a>
+  <a class="btn btn-outline-secondary btn-lg m-2 py-2 fs-3 fw-bold " type="button" href="/user/todo-list">To-do List</a>
  </div>
 </div>
 <%- include("../partials/footer") %> 

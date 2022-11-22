@@ -2,7 +2,7 @@
 
 <div class="main center m-0 p-0">
   <h1 class="heading date">
-    <%= date %>
+    <%= dailyList.day %>
   </h1>
   <h1 class="text-capitalize">
   Today
@@ -11,7 +11,7 @@
   <!-- ! We also add this with another method -->
   <div class="list-form">
     <ul class="list">
-      <% for(item of taskList.tasks){ %>
+      <% for(item of dailyList.taskList){ %>
         <li>
           <!-- ! This form for completing task in any list -->
           <form action="/user/list/check" method="post" class="d-inline">
@@ -21,8 +21,8 @@
              name="itemId" 
              value="<%= item._id %>">
              <!-- input for list id -->
-             <input type="hidden" name="listId" value="<%= taskList._id %>">
-            <input class="check-box" type="checkbox" data-task-completed="<%= item.done %>" onclick="" onchange="this.form.submit()" name="checkbox"
+             <input type="hidden" name="listId" value="<%= dailyList._id %>">
+             <input class="check-box" type="checkbox" data-task-completed="<%= item.done %>" onclick="" onchange="this.form.submit()" name="checkbox"
               value="<%= item._id %>">
             <span class="text-line text-capitalize">
               <%= item.name %>
@@ -35,19 +35,20 @@
             <input 
             type="hidden" 
             name="itemId" 
-            value="<%= item._id %>">
+            value="<%= item.id %>">
             <!-- input for list id -->
-            <input type="hidden" name="listId" value="<%= taskList._id %>">
+            <input type="hidden" name="listId" value="<%= dailyList._id %>">
             <!-- submit button  -->
-            <div class="trash"
+            <button class="trash"
             style="display:<%= item.done === true?'none': 'block'%>"
-            data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            data-bs-toggle="" data-bs-target="" type="submit"
             >
-            <i class="fa-solid fa-trash-can"></i></div>
+            <i class="fa-solid fa-trash-can"></i></button>
 
+          </form>
             <!-- ! modal for prior notification to delete the content -->
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="<%= item._id %> " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content delete-modal">
       <div class="modal-header">
@@ -65,7 +66,6 @@
   </div>
 </div>
 
-          </form>
         </li>
         <% } %>
           <li class="last-li">
@@ -74,7 +74,7 @@
 
               <input class="add-input" placeholder="New Item" type="text" name="newItem" autocomplete="off"
                 required>
-              <input type="hidden" name="listId" value="<%= taskList._id %>">
+              <input type="hidden" name="listId" value="<%= dailyList._id %>">
               <button type="submit" class="add-new"><i class="fa-solid fa-plus"></i></button>
           </li>
           </form>

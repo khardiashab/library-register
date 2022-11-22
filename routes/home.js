@@ -4,9 +4,7 @@ const passport = require("passport")
 router.get("/", (req, res) => {
   res.render("pages/home")
 })
-router.get("/lib", (req, res) => {
-  res.render("pages/lib")
-})
+
 
 router.get("/auth/google", passport.authenticate("google", {scope : ["profile", "email"]}))
 

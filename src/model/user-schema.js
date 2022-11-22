@@ -1,5 +1,45 @@
 const mongoose = require("mongoose")
 
+const task = mongoose.Schema({
+  name : {
+    type : String,
+    required : "Enter the task."
+  },
+  done : {
+    type : Boolean,
+    default : false,
+  }
+})
+const task1 = {
+  name : "Welcome to your Todo List.",
+  done : false
+}
+const task2 = {
+  name :"<--Click here After completing it." ,
+  done : false
+}
+const task3 = {
+  name :"To delete the task click here -->",
+  done : false
+}
+let d = new Date()
+
+const dailyListSchema = new mongoose.Schema({
+    day : {
+      type : String,
+    },
+    present : {
+      type : Boolean,
+      default : false
+    },
+    taskList :{
+      type : [task],
+      default : [task1, task2, task3]
+    }
+})
+
+
+
 const schema = mongoose.Schema({
   googleId :String,
   profile : {
@@ -24,20 +64,10 @@ const schema = mongoose.Schema({
       type : Number,
     },
   },
-  dailyList : [{
-    currentDay : {
-      day : Date,
-      taskList : [{
-        task : {
-          name : String,
-          done : {
-            type :Boolean,
-            default : false,
-          },
-        }
-      }]
-    }
-  } ]
+  dailyList : {
+    type : [dailyListSchema],
+    default : []
+  }
 })
 
 module.exports = mongoose.model("USER", schema)

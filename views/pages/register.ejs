@@ -1,17 +1,30 @@
 <%- include("../partials/navbar") %>
 
   <div class="tittle-container text-center fs-2 fw-bold">
-    Hey 😎 <i
-      class="fa-sharp fa-solid fa-line-height"></i><br> <em>Ajay Khardia</em>
+    Hey 😎 <br> <em>Awesome One </em>
   </div>
 
-  <form action="/user/attendence" method="post" class="my-3 text-center">
-    <input type="hidden">
-    <input type="hidden">
-    <input type="submit" class="form-control btn btn-info btn-lg text-white fw-bold py-2" value="Present">
-  </form>
+  <div class="warning-box my-5 px-2 text-center">
+    <!-- error msg flash  -->
+    <%- include("../partials/message") %>
 
+    <!--  -->
+    <form id="present-form" action="/user/attendence/coords" method="post" class="">
+      <input type="hidden" id="latitude-input" name="latitude" value>
+      <input type="hidden" id="longitude-input" name="longitude" value>
+      <input type="hidden" id="err_location" name="err_location" value>
+      <% if(present == true ){ %> 
+        
+        <input type="submit" id="present-btn" class="btn btn-primary  btn-lg px-4 fw-bold py-2" value="At work Place" disabled >
+        <% } else { %> 
+          <p class="small-text text-secondary"> Please be at your work place..</p>
+          <input type="submit" id="present-btn" class="btn btn-primary btn-dark  btn-lg px-4 fw-bold py-2" value="Reach At work Place">
+      <% } %> 
+    </form>
+  </div>
   <div class="history-accordion">
+    <p class="lead px-3 mb-0 small-text">You can check you attendence and to do-list history from here.
+    </p>
     <div class="accordion" id="accordionExample">
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
@@ -24,27 +37,80 @@
           data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <div class="last-history">
-              <div class="row row-cols-6 m-0 p-0">
-                <% for(let i=0; i<15; i++) {%>
+              <div class="row row-cols-4 rol-cols-md-6 g-1">
+                <% for(let obj of objs ) {%>
                   <div class="col p-0 my-1">
-                    <form action="/user/daily-list" method="post">
-                      <input type="hidden">
-                      <div class="daily-btn btn btn-outline-secondary">Wed, 16</div>
-                    </form>
+                      <% if(obj.list !==null) { %>
+                        <div data-bs-toggle="modal" data-bs-target="#modal<%= obj.list._id %>" class="daily-btn btn 
+                        btn-outline-<%= obj.list.present ==true ? 'success' : 'warning'%>">
+                          <%= obj.date %>
+                        </div>
+
+                        <!-- ? modal for that day history  -->
+                        <!-- Scrollable modal -->
+                        <!-- Button trigger modal -->
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal<%= obj.list._id %>" tabindex="-1" aria-labelledby="<%= obj.list._id %>"
+                          aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title text-<%= obj.list.present ===true ? 'success' : 'warning'%>" id="">
+                                  <%= obj.date %>
+                                  <p class="small-text">You are <%=obj.list.present === true ? '' : 'not' %> at your work place.</p>
+                                </h5>
+
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+
+                                <!-- use for loop for task -->
+                                <% for(let task of obj.list.taskList) { %> 
+                                  <div class="alert alert-<%= task.done ===true ? 'primary' : 'danger' %> small-text" role="alert">
+                                    <%= task.name %> 
+                                  </div>
+                                <% } %> 
+
+
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <% } else { %>
+
+                          <div data-bs-toggle="modal" data-bs-target="#modal-empty"
+                          class="daily-btn btn btn-outline-secondary">
+                            <%= obj.date %></div>
+
+                        <% } %>
                   </div>
                   <% } %>
-                  <div class="col p-0 my-1">
-                    <form action="/user/daily-list" method="post">
-                      <input type="hidden">
-                      <div class="daily-btn btn btn-outline-warning">Wed, 16</div>
-                    </form>
+
+                <!-- modal for history with no data we create only one -->
+                <div class="modal fade" id="modal-empty" tabindex="-1" aria-labelledby=""
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="">
+                         
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="alert alert-danger" role="alert">
+                          You have not used this application that day.
+                          You don't have any history.
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col p-0 my-1">
-                    <form action="/user/daily-list" method="post">
-                      <input type="hidden">
-                      <div class="daily-btn btn btn-outline-warning">Wed, 16</div>
-                    </form>
-                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -61,13 +127,13 @@
           data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <div class="last-history">
-              <p class="lead pl-3">You don't have history to show.</p>
+              <div class="alert alert-warning" role="alert">
+                You don't have any history.
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-    <%- include("../partials/footer") %>
+  </div>
+  <%- include("../partials/footer") %>

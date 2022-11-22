@@ -1,5 +1,5 @@
-// const env = require("dotenv")
-// env.config()
+const env = require("dotenv")
+env.config()
 const express = require("express")
 const app = express()
 const expressLayout = require('express-ejs-layouts')
@@ -25,7 +25,10 @@ app.use(express.static(__dirname + "/../public/"))
 // app set bodyparser
 app.use(express.urlencoded({extended : true}))
 
-
+// const url = "mongodb://localhost:27017/dbl"
+// mongoose.connect(url)
+//   .then( ()=> console.log("You succfully connected with mongodb...."))
+//   .catch(err => console.log("This error from mongodb connection: ", err))
 // connect with database
 mongoose.connect(process.env.MONGODBURI)
   .then( ()=> console.log("You succfully connected with mongodb...."))
@@ -34,12 +37,19 @@ mongoose.connect(process.env.MONGODBURI)
 
 app.use(session({
   secret : process.env.SESSION_SECRET,
-  resave : false,
-  saveUninitialized :false,
+  resave : true,
+  saveUninitialized :true,
   cookie : {
-    maxAge : 60*60*1000
+    maxAge : 86400000
   }
 }))
+
+// use of flash 
+app.use(flash())
+app.use(function(req, res, next){
+  res.locals.error_location = req.flash("error_location");
+  next();
+});
 
 // initializing passport
 app.use(passport.initialize())
@@ -50,7 +60,12 @@ passport.serializeUser( (user, done) => {
   done(null, user.id)
 })
 passport.deserializeUser( (id, done) => {
-  User.findById(id).then( user => {
+  User.findById(id).then( data => {
+    let user = {
+      _id : data._id, 
+      profile: data.profile,
+      library : data.library,
+    }
     done(null, user)
   })
 })
@@ -63,14 +78,21 @@ let ensurauthentication = (req, res, next) =>{
     next()
   }
 }
+// set router 
+// app.use("/", require("../routes/home"))
+// app.use("/user", ensurauthentication, require("../routes/user"))
+// ! daily list creat middlware
+const dcMiddleware = require("../helper/dailylistCreaterMiddleware")
+// ! localhost middleware for the website
+const localhost = require("../helper/directMiddleware")
+app.use("/user", localhost, dcMiddleware,ensurauthentication, require("../routes/user"))
 
-  // set router 
-  app.use("/", require("../routes/home"))
-  app.use("/user", ensurauthentication, require("../routes/user"))
-
+// ! random data 
+// const randomData = require("../helper/randomDataCreater")
+// randomData()
 
 
 //  defining the port 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 app.listen(port, console.log(`App is running at port: ${port}`))
