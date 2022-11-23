@@ -7,6 +7,7 @@ const ejs = require("ejs")
 const cookieSession = require("cookie-session")
 const flash = require("connect-flash")
 const mongoose = require("mongoose")
+const MongoStore = require('connect-mongo')
 const session = require("express-session")
 const User =require("./model/user-schema")
 
