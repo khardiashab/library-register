@@ -64,7 +64,7 @@ router.get("/attendence", async(req, res) =>{
   )
   let present = doc.dailyList[0].present
   
-  let objList = await histroyList(req.user._id)
+  let objList = await histroyList(req.user.googleId)
 
   res.render("pages/register", {
     objs : objList,

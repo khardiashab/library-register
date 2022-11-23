@@ -12,8 +12,8 @@ module.exports = async(id)=>{
     let date = dateChanger(d)
     // console.log("This is from listfinder.js/ date: ", date)
 
-    let query = {"_id": id, "dailyList.day" : date}
-    let select = {"dailyList.$" : 1}
+    let query = {"googleId": id, "dailyList.day" : date}
+    let select = {'dailyList.$' : 1}
     let list = await User.findOne(query, select)
     // console.log("This is from listfinder.js/ list: ", list)
     
@@ -26,5 +26,6 @@ module.exports = async(id)=>{
     // console.log("This is from the listfinder.js : ", obj)
     arr.push(obj)
   }
+  console.log(arr)
   return arr;
 }
