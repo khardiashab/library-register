@@ -41,7 +41,7 @@ app.use(session({
   store: MongoStore.create({
     mongoUrl: 'process.env.MONGODBURI',
     autoRemove: 'native' // Default
-  }),
+  }).then(()=>{console.log("ok")}).catch(err => console.log(err)),
   resave : true,
   saveUninitialized :true,
   cookie : {
