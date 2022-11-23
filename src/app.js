@@ -37,6 +37,10 @@ mongoose.connect(process.env.MONGODBURI)
 
 app.use(session({
   secret : process.env.SESSION_SECRET,
+  store: MongoStore.create({
+    mongoUrl: 'process.env.MONGODBURI',
+    autoRemove: 'native' // Default
+  }),
   resave : true,
   saveUninitialized :true,
   cookie : {
@@ -60,12 +64,7 @@ passport.serializeUser( (user, done) => {
   done(null, user.id)
 })
 passport.deserializeUser( (id, done) => {
-  User.findById(id).then( data => {
-    let user = {
-      _id : data._id, 
-      profile: data.profile,
-      library : data.library,
-    }
+  User.findById(id).then( user => {
     done(null, user)
   })
 })
