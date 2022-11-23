@@ -38,10 +38,7 @@ mongoose.connect(process.env.MONGODBURI)
 
 app.use(session({
   secret : process.env.SESSION_SECRET,
-  store: MongoStore.create({
-    mongoUrl: 'process.env.MONGODBURI',
-    autoRemove: 'native' // Default
-  }).then(()=>{console.log("ok")}).catch(err => console.log(err)),
+  store : MongoStore.create({ mongoUrl: process.env.MONGODBURI }),
   resave : true,
   saveUninitialized :true,
   cookie : {
