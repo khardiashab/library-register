@@ -84,7 +84,7 @@ app.use("/user", ensurauthentication, dcMiddleware,  require("../routes/user"))
 // // const localhost = require("../helper/directMiddleware")
 // app.use("/user", localhost, dcMiddleware,ensurauthentication, require("../routes/user"))
 
-// ! random data 
+// // ! random data 
 // const randomData = require("../helper/randomDataCreater")
 // randomData()
 

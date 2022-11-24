@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const User = require("../src/model/user-schema")
+const dailyList = require("../src/model/daily-list-schema")
 const Quote = require("../src/model/quote-schema")
 const dateChanger = require("../helper/dateTypeChanger")
 const histroyList = require("../helper/listfinder")
@@ -45,24 +46,20 @@ router.post("/details-form",  async(req, res) => {
 router.get("/todo-list", async(req, res) => {
   let date = new Date();
   date = dateChanger(date)
+  let listId = req.user.googleId + date
   // let's find the data for today and send it to the browser
-  let doc = await User.findOne(
-    {"_id": req.user._id, "dailyList.day" : date }, //find qurey 
-    {"dailyList.$" : 1} // output qurey
-  )
-  res.render("pages/list", {dailyList : doc.dailyList[0]})
+  let doc = await dailyList.findOne({"listId" : listId})
+  res.render("pages/list", {dailyList : doc})
 })
 
 // attendence page get method
 router.get("/attendence", async(req, res) =>{
   let date = new Date();
   date = dateChanger(date)
+  let listId = req.user.googleId + date
   // let's find the data for today and send it to the browser
-  let doc = await User.findOne(
-    {"_id": req.user._id, "dailyList.day" : date }, //find qurey 
-    {"dailyList.present.$" : 1} // output qurey
-  )
-  let present = doc.dailyList[0].present
+  let doc = await dailyList.findOne({"listId" : listId} )
+  let present = doc.present
   
   let objList = await histroyList(req.user.googleId)
 
@@ -82,19 +79,15 @@ router.post("/attendence/coords", async(req,res) =>{
 
     let date = new Date();
     date = dateChanger(date)
+    let listId = req.user.googleId + date
     let query = {
-      "_id" : req.user._id,
-      'dailyList.day' : date
+      "listId" : listId
     }
     let set = {
-      $set : {"dailyList.$.present" : true}
+      $set : {"present" : true}
     }
-    let arrayFilter = {
-      arrayFilters : [
-        {"element.day" : date }
-      ]
-    }
-    await User.updateOne(query , set, arrayFilter)
+
+    await dailyList.updateOne(query, set)
 
     res.redirect("/user/attendence")
   } else {
@@ -107,21 +100,13 @@ router.post("/list/check", async(req, res) => {
   const itemId = req.body.itemId
 
   // qurey for searching the doc 
-  let query = {
-    "_id" : req.user._id,
-    'dailyList._id' : req.body.listId
-  }
-
+ let list_id = req.body.list_id
+ let query = {"_id" : list_id, "taskList._id" : itemId}
   let set = {
-    $set : {"dailyList.$[].taskList.$[element].done" : true}
-  }
-  let arrayFilter = {
-    arrayFilters : [
-      {"element._id" : req.body.itemId }
-    ]
+    $set : {"taskList.$.done" : true}
   }
 
-  await User.updateOne(query , set, arrayFilter)
+  await dailyList.updateOne(query , set)
 
  res.redirect("/user/todo-list")
 })
@@ -133,20 +118,23 @@ router.post("/list/newItem", async (req, res) =>{
     name : req.body.newItem
   }
   // * creating a qurey to searching the object in dailyList array
-  let query = {"_id" : req.user._id, "dailyList._id" : req.body.listId}
+  // const doc = await dailyList.findById(req.body.listId)
+  // doc.taskList.push(task)
+  // await doc.save()
 
   // * making a push object to update the user
-  let push = {"$push": {"dailyList.$.taskList" : task}}
-  await User.updateOne(query, push)
+  let push = {"$push": {"taskList" : task}}
+  
+  await dailyList.findByIdAndUpdate(req.body.listId, push)
 
   res.redirect("/user/todo-list")
 })
 
 // post method for delete the task
 router.post("/list/delete", async(req,res) => {
-  let query = {"_id" : req.user._id, "dailyList._id" : req.body.listId, }
-  let pull = {$pull : {"dailyList.$.taskList" : {"_id" : req.body.itemId}}}
-  await User.updateOne(query, pull )
+  let query = {"_id" : req.body.listId }
+  let pull = {$pull : {"taskList" : {"_id" : req.body.itemId}}}
+  await dailyList.updateOne(query, pull )
 
   res.redirect("/user/todo-list")
 })
