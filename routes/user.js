@@ -3,7 +3,7 @@ const User = require("../src/model/user-schema")
 const dailyList = require("../src/model/daily-list-schema")
 const Quote = require("../src/model/quote-schema")
 const dateChanger = require("../helper/dateTypeChanger")
-const histroyList = require("../helper/listfinder")
+const listMiddleware = require("../helper/listfinderMiddleware")
 
 
 router.get("/", async(req, res) => {
@@ -53,7 +53,7 @@ router.get("/todo-list", async(req, res) => {
 })
 
 // attendence page get method
-router.get("/attendence", async(req, res) =>{
+router.get("/attendence", listMiddleware,  async(req, res) =>{
   let date = new Date();
   date = dateChanger(date)
   let listId = req.user.googleId + date
@@ -61,10 +61,9 @@ router.get("/attendence", async(req, res) =>{
   let doc = await dailyList.findOne({"listId" : listId} )
   let present = doc.present
   
-  let objList = await histroyList(req.user.googleId)
 
   res.render("pages/register", {
-    objs : objList,
+    objs : req.list,
     present,
   })
 })
